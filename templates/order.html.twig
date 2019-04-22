@@ -1,0 +1,11 @@
+<b>Номер заказа:</b> {{ order.id }}<br>
+<b>Статус:</b> {{ order.state }}<br>
+<b>Адрес:</b> {{ order.address }}<br>
+
+{% if order.destinations[0] %}
+    <b>Куда:</b> {{ order.destinations[0] }}<br>
+{% endif %}
+
+<b>Цена:</b> {{ order.price }}<br>
+<b>Комментарий:</b> {{ order.comment }}<br>
+<b>Время:</b> {{ order.date | date("H:i d.m.Y") }}

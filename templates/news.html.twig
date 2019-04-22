@@ -1,0 +1,22 @@
+{% extends "layout.html.twig" %}
+
+{% block Content %}
+<h2>Новости ({{ count_news }} штук)</h2>
+    <table border="1" cellspacing="0" cellpadding="15">
+        <tbody>
+
+        {% for article in news %}
+
+            <tr>
+                <th>{{ article.delivering_period_start | date("d.m.Y H:i") }}</th><td><b>{{ article.title }}</b></td>
+            </tr>
+
+            <tr>
+                <td colspan="2">{{ article.text }}</td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody></table>
+
+{% endblock %}

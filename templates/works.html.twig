@@ -1,0 +1,65 @@
+{% extends "layout.html.twig" %}
+
+{% block Content %}
+
+
+<h3>Всего на линии такси: {{ taxi_count }} (всех машин {{ all_count }})</h3>
+На перерыве: {{ pause }}<br><br>
+
+
+<table>
+    <tr>
+        <th>Позывной</th>
+        <th>Посл. заказ</th>
+        <th>Положение</th>
+    </tr>
+
+
+    {% for key, driver in drivers %}
+
+
+        <tr id={{ key }}>
+                <td
+
+        {% if not driver %}
+            style='background-color:#F8E6E0'
+        {% else %}
+            style='background-color:#E3F6CE'
+        {% endif %}
+                ><a href=driver/?driver={{ key }}>{{ key }}</a></td>
+            <td><a href=# onclick=zakaz({{ key }}) id=a{{ key }}>заказ</a></td>
+            <td>- - -</td>
+        </tr>
+
+
+        {% endfor %}
+
+    </table>
+
+
+
+    <script>
+		function zakaz(key) {
+
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '/{{ name }}/order/'+key, true);
+			xhr.send();
+			xhr.onreadystatechange = function() {
+				if (this.readyState != 4) return;
+				if (this.status != 200) {
+					// обработать ошибку
+					alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+					return;
+				}
+				var new_tr = document.getElementById(key);
+				var tr = document.createElement('tr');
+				tr.innerHTML = "<td colspan=3 style='background-color:beige'><tt>"+this.responseText+"</tt></td>";
+				new_tr.parentNode.insertBefore(tr, new_tr.nextSibling);
+				document.getElementById("a"+key).removeAttribute("onclick");
+			}
+			event.preventDefault()
+		}
+    </script>
+
+
+{% endblock %}

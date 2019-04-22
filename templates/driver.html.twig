@@ -1,0 +1,84 @@
+{% extends "layout.html.twig" %}
+
+{% block Content %}
+
+    {% if driver_info is empty %}
+        <div class="info">Водителя <b>{{ driver }}</b> не существует</div>
+    {% else %}
+
+<table border=1 cellspacing=0 cellpadding=15>
+    <tr>
+        <th colspan=2>Позывной {{ driver }}</th>
+    </tr>
+    <tr>
+        <td>Машина</td>
+        <td>{{ driver_info.car }}</td>
+    </tr>
+    <tr>
+        <td>Имя</td>
+        <td>{{ driver_info.name }}</td>
+    </tr>
+    <tr>
+        <td>Телефон</td>
+        <td>{{ driver_info.phone }}</td>
+    </tr>
+    <tr>
+        <td>Баланс</td>
+        <td>{{ driver_info.balance }}</td>
+    </tr>
+    <tr>
+        <td colspan=2 align=center>= Статистика =</td>
+    </tr>
+    <tr>
+        <td>За эту смену</td>
+        <td>{{ driver_info.stats.session }}</td>
+    </tr>
+    <tr>
+        <td>За неделю</td>
+        <td>{{ driver_info.stats.week }}</td>
+    </tr>
+    <tr>
+        <td>За месяц</td>
+        <td>{{ driver_info.stats.month }}</td>
+    </tr>
+    <tr>
+        <td>Прошлые 30 дней</td>
+        <td>{{ driver_info.stats.last_30_days }}</td>
+    </tr>
+    <tr>
+        <td>Прошлый месяц</td>
+        <td>{{ driver_info.stats.last_month }}</td>
+    </tr>
+
+</table>
+
+
+
+    <center><h3 id="history"><a onclick='load_arhiv(0)' href=#>Архив заказов водителя</a></h3>
+
+        <div id='arhiv'></div>
+
+        <script>
+			function load_arhiv(number) {
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', '/{{ name }}/history/{{ driver }}/?part='+number, true);
+				xhr.send();
+
+				xhr.onreadystatechange = function() {
+					if (this.readyState != 4) return;
+					if (this.status != 200) {
+						alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+						return;
+					}
+					// получить результат из this.responseText или this.responseXML
+                    let arhiv = document.getElementById("arhiv").innerHTML;
+					document.getElementById("arhiv").innerHTML = arhiv + this.responseText;
+					document.getElementById("history").remove();
+				}
+			}
+        </script>
+
+
+    {% endif %}
+
+{% endblock %}

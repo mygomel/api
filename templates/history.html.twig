@@ -1,0 +1,31 @@
+<br>
+
+<table>
+    {% for history in driver_history %}
+        <tr><th><b>{{ part + loop.index }} - Номер заказа:</b> {{ history.id }}</tr></th>
+        <tr
+        {% if history.state =="Отменен" %}
+            class="cancel"
+        {% endif %}
+        ><td><b>Статус:</b> {{ history.state }}</td></tr>
+
+        <tr><td><b>Адрес:</b> {{ history.address }}</td></tr>
+
+    {% if history.destinations[0] %}
+        <tr><td><b>Куда:</b> {{ history.destinations[0] }}</td></tr>
+    {% endif %}
+
+    <tr><td><b>Цена:</b> {{ history.price }}</td></tr>
+    <tr><td><b>Комментарий:</b> {{ history.comment}}</td></tr>
+    <tr><td><b>Время:</b> {{ history.date | date("H:i d.m.Y") }}</td></tr>
+
+    {% endfor %}
+
+
+</table>
+
+
+
+<p></p>
+<a href="#" onclick='load_arhiv({{ part + 20 }}); return false' id="history">Показать следующие 20 заказов</a>
+<p></p>

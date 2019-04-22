@@ -1,0 +1,11 @@
+{
+  "require": {
+    "php": ">=7.1",
+    "twig/twig": "2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "App/"
+    }
+  }
+}

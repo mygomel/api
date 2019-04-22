@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/inc/style.css">
+    <title>Такси хайп</title>
+</head>
+<body>
+
+<table width=100%>
+    <tr align=center>
+
+        {% if name == "taxi181" %}
+        <td class=active colspan=2><h1>181 Автомиг</h1></td>
+        <td colspan=2><h3><a href=/taxi155>155 Альфа</a></h3></td>
+        {% else %}
+        <td colspan=2><h3><a href=/taxi181>181 Автомиг</a></h3></td>
+        <td class=active colspan=2><h1>155 Альфа</h1></td>
+        {% endif %}
+
+    </tr>
+
+    <tr align=center>
+    <td><a href='/{{ name }}/works'>Работающие</a></td>
+    <td><a href='/{{ name }}/news'>Новости</a></td>
+    <td><form name="driver" method="get" action="/{{ name }}/driver/">
+        <input type=text name=driver size=3 maxlength=3 required placeholder='Позывной'>
+        <input type=submit value=Показать></form>
+    </td>
+    </tr>
+
+</table>
+<p></p>
+{% block Content %} Тут будет контент {% endblock %}
+
+
+</body>
+</html>
